@@ -37,4 +37,4 @@ jobs:
       env:
         CORREO_PASS: ${{ secrets.CORREO_PASS }} # Tu token cifrado de Gmail/Outlook
       run: |
-        python main-data.py
+        python main-data.py "${{ github.event.client_payload.correo_usuario }}"
