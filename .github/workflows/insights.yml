@@ -1,0 +1,39 @@
+name: Bot Predictivo Kuepa - Automatizacion
+
+on:
+  repository_dispatch:
+    types: [disparar_bot] # Nombre del evento que usaremos en el Webhook / n8n
+
+jobs:
+  ejecutar-reporte:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 1. Descargar Codigo del Repositorio
+      uses: actions/checkout@v3
+
+    - name: 2. Configurar Entorno de Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: 3. Instalar Dependencias del Sistema (Requeridas por WeasyPrint)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential python3-dev python3-pip python3-setuptools python3-wheel python3-cffi libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf2.0-0 libffi-dev shared-mime-info
+
+    - name: 4. Instalar Librerias de Python
+      run: |
+        pip install --upgrade pip
+        pip install google-cloud-bigquery pandas jinja2 weasyprint db-dtypes
+
+    - name: 5. Autenticar con Google Cloud (BigQuery)
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }} # Llave segura de tu cuenta de GCP
+
+    - name: 6. Ejecutar Matriz y Enviar Reportes
+      env:
+        CORREO_PASS: ${{ secrets.CORREO_PASS }} # Tu token cifrado de Gmail/Outlook
+      run: |
+        python main-data.py
