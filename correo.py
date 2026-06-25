@@ -14,7 +14,13 @@ def enviar_correo_con_adjunto(html_body, ruta_pdf):
     # 1. Configuración de parámetros institucionales
     REMITENTE = "christian.urquijo@kuepa.com"
     PASSWORD = os.environ.get("CORREO_PASS")
-    DESTINATARIOS = ["christian.urquijo@kuepa.com"]
+    if len(sys.argv) > 1 and "@" in sys.argv[1]:
+        DESTINATARIOS = [sys.argv[1]] # Se convierte en el único receptor del reporte
+        print(f"📬 Modo Dinámico: Enviando reporte solicitado a {destinatarios}")
+    else:
+        # Fallback de respaldo por si ejecutas el script manual desde la terminal
+        DESTINATARIOS = ["gerente@kuepa.com", "coordinador_kpis@kuepa.com"]
+        print(f"📬 Modo Por Defecto: Enviando a lista fija institucional")
     
     # Validación preventiva de seguridad para Cloud Shell
     if not PASSWORD:
