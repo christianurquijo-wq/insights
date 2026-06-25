@@ -1,8 +1,9 @@
-name: Bot Predictivo Kuepa - Automatizacion
+name: Bot Predictivo Kuepa - Pipeline Automatico
 
 on:
   repository_dispatch:
-    types: [disparar_bot] # Nombre del evento que usaremos en el Webhook / n8n
+    types: [disparar_bot]
+  workflow_dispatch: 
 
 jobs:
   ejecutar-reporte:
