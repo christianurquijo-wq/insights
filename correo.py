@@ -17,7 +17,7 @@ def enviar_correo_con_adjunto(html_body, ruta_pdf):
     PASSWORD = os.environ.get("CORREO_PASS")
     if len(sys.argv) > 1 and "@" in sys.argv[1]:
         DESTINATARIOS = [sys.argv[1]] # Se convierte en el único receptor del reporte
-        print(f"📬 Modo Dinámico: Enviando reporte solicitado a {destinatarios}")
+        print(f"📬 Modo Dinámico: Enviando reporte solicitado a {DESTINATARIOS}")
     else:
         # Fallback de respaldo por si ejecutas el script manual desde la terminal
         DESTINATARIOS = ["gerente@kuepa.com", "coordinador_kpis@kuepa.com"]
