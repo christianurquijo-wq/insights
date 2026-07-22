@@ -104,7 +104,7 @@ query = """
     LEFT JOIN Carac ON Seg.Documento = Carac.Documento
     LEFT JOIN Sat   ON Seg.Documento = Sat.Documento
     LEFT JOIN Emp   ON Seg.Documento = Emp.Documento
-    WHERE Seg.Fecha_Append = '2026-05'
+    WHERE Seg.Fecha_Append = '2026-06'
     GROUP BY Seg.Proyecto
     ORDER BY Total_Inscritos DESC
 """
