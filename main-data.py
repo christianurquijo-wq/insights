@@ -11,7 +11,7 @@ client = bigquery.Client(project="sustained-edge-465417-m3")
 
 # ─── 2. Query consolidada ─────────────────────────────────────────────────────
 query = """
-    WITH Seg AS (
+   WITH Seg AS (
         SELECT * FROM `sustained-edge-465417-m3.EFE_2026.Unificado_Seguimiento_APPEND`
     ),
     Carac AS (
@@ -22,7 +22,7 @@ query = """
             ORDER BY (
                 (CASE WHEN Tipo_documento IS NOT NULL AND LOWER(Tipo_documento) != 'pendiente' THEN 1 ELSE 0 END) +
                 (CASE WHEN Fecha_nacimiento IS NOT NULL AND LOWER(Fecha_nacimiento) != 'pendiente' THEN 1 ELSE 0 END) +
-                (CASE WHEN Edad IS NOT NULL AND LOWER(Edad) != 'pendiente' THEN 1 ELSE 0 END) +
+                (CASE WHEN Edad IS NOT NULL THEN 1 ELSE 0 END) +
                 (CASE WHEN Estrato IS NOT NULL AND LOWER(Estrato) != 'pendiente' THEN 1 ELSE 0 END) +
                 (CASE WHEN Actividad_principal IS NOT NULL AND LOWER(Actividad_principal) != 'pendiente' THEN 1 ELSE 0 END) +
                 (CASE WHEN Numero_hijos_Personas_cargo IS NOT NULL AND LOWER(Numero_hijos_Personas_cargo) != 'pendiente' THEN 1 ELSE 0 END) +
@@ -101,8 +101,8 @@ query = """
             ), 0), 4
         ) AS Resultado_Aprobacion
     FROM Seg
-    LEFT JOIN Carac ON Seg.Documento = Carac.Documento
-    LEFT JOIN Sat   ON Seg.Documento = Sat.Documento
+    LEFT JOIN Carac ON CAST(Seg.Documento AS STRING) = Carac.Documento
+    LEFT JOIN Sat   ON CAST(Seg.Documento AS STRING) = Sat.Documento
     LEFT JOIN Emp   ON Seg.Documento = Emp.Documento
     WHERE Seg.Fecha_Append = '2026-06'
     GROUP BY Seg.Proyecto
