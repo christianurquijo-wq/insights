@@ -82,7 +82,7 @@ def generar_reporte_html(df):
                     <tr style="background:none;">
                         <td style="border:none; padding:0;">
                             <h1>Reporte de Riesgos Predictivos y KPIs</h1>
-                            <p>Monitoreo Automatizado de Empleabilidad • Corte: {{ fecha_corte }} (Mayo 2026)</p>
+                            <p>Monitoreo Automatizado de Empleabilidad • Corte: {{ fecha_corte }} (Junio 2026)</p>
                         </td>
                         <td style="border:none; padding:0; text-align:right;">
                             <img src="{{ url_logo }}" alt="Logo Kuepa" style="height:40px; width:auto;">
